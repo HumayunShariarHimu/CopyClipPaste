@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CopyClipPaste</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+      margin: 0;
+      padding: 3rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: #222;
+      text-align: center;
+    }
+
+    h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+    }
+
+    button {
+      background: #3b82f6;
+      border: none;
+      border-radius: 30px;
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(59, 130, 246, 0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #2563eb;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.7);
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.6);
+    }
+
+    #output {
+      margin-top: 2rem;
+      max-width: 600px;
+      width: 90%;
+      min-height: 120px;
+      background: #fff;
+      border-radius: 15px;
+      padding: 25px 30px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      font-size: 1.2rem;
+      color: #444;
+      white-space: pre-wrap;
+      word-break: break-word;
+      user-select: text;
+      line-height: 1.5;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+      button {
+        width: 100%;
+        padding: 15px 0;
+      }
+      #output {
+        font-size: 1rem;
+        min-height: 100px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>CopyClipPaste</h2>
+  <button id="pasteBtn" aria-label="Clipboard থেকে টেক্সট পেস্ট করুন">Clipboard থেকে পেস্ট করো</button>
+
+  <div id="output" role="region" aria-live="polite" aria-atomic="true">Clipboard এর Copy করা টেক্সট দেখুন...</div>
+
+  <script>
+    const pasteBtn = document.getElementById('pasteBtn');
+    const output = document.getElementById('output');
+
+    pasteBtn.addEventListener('click', async () => {
+      try {
+        const text = await navigator.clipboard.readText();
+        output.textContent = text.trim() || "Clipboard এ কোনো টেক্সট পাওয়া যায়নি।";
+      } catch (err) {
+        output.textContent = "Clipboard থেকে পড়া সম্ভব হলো না। ব্রাউজারের অনুমতি দিন।";
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>
